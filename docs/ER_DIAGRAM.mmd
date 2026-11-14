@@ -1,0 +1,58 @@
+erDiagram
+  USER ||--o{ SALE : creates
+  USER ||--o{ STOCK_MOVEMENT : performs
+  MEDICINE ||--o{ BATCH : has
+  SUPPLIER ||--o{ BATCH : supplies
+  MEDICINE ||--o{ SALE_ITEM : sold_as
+  BATCH ||--o{ SALE_ITEM : allocated_from
+  MEDICINE ||--o{ STOCK_MOVEMENT : tracks
+  BATCH ||--o{ STOCK_MOVEMENT : records
+  SALE ||--|{ SALE_ITEM : contains
+
+  USER {
+    ObjectId _id PK
+    string name
+    string email UK
+    string password
+    string role
+  }
+  MEDICINE {
+    ObjectId _id PK
+    string name
+    string sku UK
+    string category
+    int reorderLevel
+  }
+  SUPPLIER {
+    ObjectId _id PK
+    string name
+    string phone
+    string email
+  }
+  BATCH {
+    ObjectId _id PK
+    ObjectId medicine FK
+    ObjectId supplier FK
+    string batchNumber
+    int quantity
+    date expiryDate
+    number purchasePrice
+    number salePrice
+  }
+  SALE {
+    ObjectId _id PK
+    string invoiceNumber UK
+    number subtotal
+    number taxAmount
+    number total
+    ObjectId createdBy FK
+  }
+  STOCK_MOVEMENT {
+    ObjectId _id PK
+    ObjectId medicine FK
+    ObjectId batch FK
+    string type
+    int quantityChange
+    string reason
+    ObjectId performedBy FK
+  }
